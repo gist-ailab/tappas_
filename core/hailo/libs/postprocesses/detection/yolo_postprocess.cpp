@@ -396,6 +396,22 @@ void yolov5(HailoROIPtr roi, void *params_void_ptr)
     hailo_common::add_detections(roi, detections);
 }
 
+void yolov5m_3class(HailoROIPtr roi, void *params_void_ptr)
+{
+    YoloParams *params = reinterpret_cast<YoloParams *>(params_void_ptr);
+    auto post = Yolov5(roi, params);
+    auto detections = post.decode();
+    
+    detections.erase(std::remove_if(detections.begin(), detections.end(),
+                                    [](HailoDetection &obj) {
+                                        int class_id = obj.get_class_id();
+                                        return class_id < 0 || class_id > 2; // 0:Person, 1:Door, 2:Window만 허용
+                                    }),
+                     detections.end());
+    
+    hailo_common::add_detections(roi, detections);
+}
+
 void yolov3(HailoROIPtr roi, void *params_void_ptr)
 {
     YoloParams *params = reinterpret_cast<YoloParams *>(params_void_ptr);

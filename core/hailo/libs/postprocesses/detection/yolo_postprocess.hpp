@@ -68,6 +68,31 @@ public:
     }
 };
 
+
+class Yolov5m3ClassParams : public YoloParams
+{
+public:
+    Yolov5m3ClassParams()
+    {
+        labels = {
+            {0, "Person"},
+            {1, "Door"}, 
+            {2, "Window"}
+        };
+        max_boxes = 100;
+        num_classes = 3;
+        detection_threshold = 0.25f;
+        iou_threshold = 0.45f;
+        output_activation = "sigmoid";
+        
+        anchors_vec = {
+            {10, 13, 16, 30, 33, 23},      
+            {30, 61, 62, 45, 59, 119},     
+            {116, 90, 156, 198, 373, 326}  
+        };
+    }
+};
+
 YoloParams *init(std::string config_path, std::string func_name);
 void free_resources(void *params_void_ptr);
 void filter(HailoROIPtr roi, void *params_void_ptr);
@@ -85,5 +110,11 @@ void yolov5_personface(HailoROIPtr roi, void *params_void_ptr);
 void yolov5_personface_letterbox(HailoROIPtr roi, void *params_void_ptr);
 void yolov5_no_faces_letterbox(HailoROIPtr roi, void *params_void_ptr);
 void yolov5_adas(HailoROIPtr roi, void *params_void_ptr);
+
+void yolov5_adas(HailoROIPtr roi, void *params_void_ptr);
+void yolov5m_3class(HailoROIPtr roi, void *params_void_ptr);
+void yolov5m_10class(HailoROIPtr roi, void *params_void_ptr);
+void yolov5s_3class(HailoROIPtr roi, void *params_void_ptr);
+void yolov5s_10class(HailoROIPtr roi, void *params_void_ptr);
 
 __END_DECLS
