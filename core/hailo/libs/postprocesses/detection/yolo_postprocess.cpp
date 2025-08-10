@@ -396,7 +396,7 @@ void yolov5(HailoROIPtr roi, void *params_void_ptr)
     hailo_common::add_detections(roi, detections);
 }
 
-void yolov5m_3class(HailoROIPtr roi, void *params_void_ptr)
+void yolov5_3class(HailoROIPtr roi, void *params_void_ptr)
 {
     YoloParams *params = reinterpret_cast<YoloParams *>(params_void_ptr);
     auto post = Yolov5(roi, params);
@@ -406,6 +406,22 @@ void yolov5m_3class(HailoROIPtr roi, void *params_void_ptr)
                                     [](HailoDetection &obj) {
                                         int class_id = obj.get_class_id();
                                         return class_id < 0 || class_id > 2; // 0:Person, 1:Door, 2:Window만 허용
+                                    }),
+                     detections.end());
+    
+    hailo_common::add_detections(roi, detections);
+}
+
+void yolov5_10class(HailoROIPtr roi, void *params_void_ptr)
+{
+    YoloParams *params = reinterpret_cast<YoloParams *>(params_void_ptr);
+    auto post = Yolov5(roi, params);
+    auto detections = post.decode();
+    
+    detections.erase(std::remove_if(detections.begin(), detections.end(),
+                                    [](HailoDetection &obj) {
+                                        int class_id = obj.get_class_id();
+                                        return class_id < 0 || class_id > 9; // 0~9 클래스만 허용
                                     }),
                      detections.end());
     

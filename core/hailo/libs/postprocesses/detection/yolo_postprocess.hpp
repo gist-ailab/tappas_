@@ -69,10 +69,10 @@ public:
 };
 
 
-class Yolov5m3ClassParams : public YoloParams
+class Yolov53ClassParams : public YoloParams
 {
 public:
-    Yolov5m3ClassParams()
+    Yolov53ClassParams()
     {
         labels = {
             {0, "Person"},
@@ -81,6 +81,37 @@ public:
         };
         max_boxes = 100;
         num_classes = 3;
+        detection_threshold = 0.25f;
+        iou_threshold = 0.45f;
+        output_activation = "sigmoid";
+        
+        anchors_vec = {
+            {10, 13, 16, 30, 33, 23},      
+            {30, 61, 62, 45, 59, 119},     
+            {116, 90, 156, 198, 373, 326}  
+        };
+    }
+};
+
+class Yolov510ClassParams : public YoloParams
+{
+public:
+    Yolov510ClassParams()
+    {
+        labels = {
+            {0, "Enemy"},
+            {1, "LandingMarker"},
+            {2, "Obstacle"},
+            {3, "FireExt"},
+            {4, "Door"},
+            {5, "Victim"},
+            {6, "Ally"},
+            {7, "Exit"},
+            {8, "Window"},
+            {9, "Light"}
+        };
+        max_boxes = 100;
+        num_classes = 10;
         detection_threshold = 0.25f;
         iou_threshold = 0.45f;
         output_activation = "sigmoid";
@@ -112,9 +143,7 @@ void yolov5_no_faces_letterbox(HailoROIPtr roi, void *params_void_ptr);
 void yolov5_adas(HailoROIPtr roi, void *params_void_ptr);
 
 void yolov5_adas(HailoROIPtr roi, void *params_void_ptr);
-void yolov5m_3class(HailoROIPtr roi, void *params_void_ptr);
-void yolov5m_10class(HailoROIPtr roi, void *params_void_ptr);
-void yolov5s_3class(HailoROIPtr roi, void *params_void_ptr);
-void yolov5s_10class(HailoROIPtr roi, void *params_void_ptr);
+void yolov5_3class(HailoROIPtr roi, void *params_void_ptr);
+void yolov5_10class(HailoROIPtr roi, void *params_void_ptr);
 
 __END_DECLS
