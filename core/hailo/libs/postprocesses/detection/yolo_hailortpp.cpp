@@ -7,10 +7,31 @@ static const std::string DEFAULT_YOLOV5M_OUTPUT_LAYER = "yolov5m_wo_spp_60p/yolo
 static const std::string DEFAULT_YOLOV5M_VEHICLES_OUTPUT_LAYER = "yolov5m_vehicles/yolov5_nms_postprocess";
 static const std::string DEFAULT_YOLOV8S_OUTPUT_LAYER = "yolov8s/yolov8_nms_postprocess";
 static const std::string DEFAULT_YOLOV8M_OUTPUT_LAYER = "yolov8m/yolov8_nms_postprocess";
+static const std::string DEFAULT_YOLOV5M_3CLASS_OUTPUT_LAYER = "yolov5m_3class/yolov5_nms_postprocess";
+static const std::string DEFAULT_YOLOV5M_10CLASS_OUTPUT_LAYER = "yolov5m_10class/yolov5_nms_postprocess";
 
 static std::map<uint8_t, std::string> yolo_vehicles_labels = {
     {0, "unlabeled"},
     {1, "car"}};
+
+static std::map<uint8_t, std::string> yolo_3class_labels = {
+    {0, "unlabeled"},
+    {1, "Person"},
+    {2, "Door"}},
+    {3, "Window"};
+
+static std::map<uint8_t, std::string> yolo_10class_labels = {
+    {0, "unlabeled"},
+    {1, "Enemy"},
+    {2, "LandingMarker"},
+    {3, "Obstacle"},
+    {4, "FireExt"},
+    {5, "Door"},
+    {6, "Victim"},
+    {7, "Ally"},
+    {8, "Exit"},
+    {9, "Window"},
+    {10, "Light"}};
 
 void yolov5(HailoROIPtr roi)
 {
@@ -66,6 +87,20 @@ void yolox(HailoROIPtr roi)
 void yolov5m_vehicles(HailoROIPtr roi)
 {
     auto post = HailoNMSDecode(roi->get_tensor(DEFAULT_YOLOV5M_VEHICLES_OUTPUT_LAYER), yolo_vehicles_labels);
+    auto detections = post.decode<float32_t, common::hailo_bbox_float32_t>();
+    hailo_common::add_detections(roi, detections);
+}
+
+void yolov5m_3class(HailoROIPtr roi)
+{
+    auto post = HailoNMSDecode(roi->get_tensor(DEFAULT_YOLOV5M_3CLASS_OUTPUT_LAYER), yolo_3class_labels);
+    auto detections = post.decode<float32_t, common::hailo_bbox_float32_t>();
+    hailo_common::add_detections(roi, detections);
+}
+
+void yolov5m_10class(HailoROIPtr roi)
+{
+    auto post = HailoNMSDecode(roi->get_tensor(DEFAULT_YOLOV5M_10CLASS_OUTPUT_LAYER), yolo_10class_labels);
     auto detections = post.decode<float32_t, common::hailo_bbox_float32_t>();
     hailo_common::add_detections(roi, detections);
 }

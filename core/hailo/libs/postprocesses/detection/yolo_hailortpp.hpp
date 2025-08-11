@@ -16,4 +16,6 @@ void yolov8m(HailoROIPtr roi);
 void yolox(HailoROIPtr roi);
 void yolov5_no_persons(HailoROIPtr roi);
 void yolov5m_vehicles(HailoROIPtr roi);
+void yolov5m_3class(HailoROIPtr roi);
+void yolov5m_10class(HailoROIPtr roi);
 __END_DECLS
