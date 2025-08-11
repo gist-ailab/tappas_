@@ -403,9 +403,9 @@ void yolov5_3class(HailoROIPtr roi, void *params_void_ptr)
     auto detections = post.decode();
     
     detections.erase(std::remove_if(detections.begin(), detections.end(),
-                                    [](HailoDetection &obj) {
+                                    [](const HailoDetection &obj) {
                                         int class_id = obj.get_class_id();
-                                        return class_id < 0 || class_id > 2; // 0:Person, 1:Door, 2:Window만 허용
+                                        return class_id < 0 || class_id > 2;
                                     }),
                      detections.end());
     
@@ -419,9 +419,9 @@ void yolov5_10class(HailoROIPtr roi, void *params_void_ptr)
     auto detections = post.decode();
     
     detections.erase(std::remove_if(detections.begin(), detections.end(),
-                                    [](HailoDetection &obj) {
+                                    [](const HailoDetection &obj) {
                                         int class_id = obj.get_class_id();
-                                        return class_id < 0 || class_id > 9; // 0~9 클래스만 허용
+                                        return class_id < 0 || class_id > 9;
                                     }),
                      detections.end());
     
