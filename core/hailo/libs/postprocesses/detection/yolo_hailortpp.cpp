@@ -8,7 +8,7 @@ static const std::string DEFAULT_YOLOV5M_VEHICLES_OUTPUT_LAYER = "yolov5m_vehicl
 static const std::string DEFAULT_YOLOV8S_OUTPUT_LAYER = "yolov8s/yolov8_nms_postprocess";
 static const std::string DEFAULT_YOLOV8M_OUTPUT_LAYER = "yolov8m/yolov8_nms_postprocess";
 static const std::string DEFAULT_YOLOV5M_3CLASS_OUTPUT_LAYER = "yolov5m_3class/yolov5_nms_postprocess";
-static const std::string DEFAULT_YOLOV5M_10CLASS_OUTPUT_LAYER = "yolov5m_10class/yolov5_nms_postprocess";
+static const std::string DEFAULT_YOLOV5M_10CLASS_OUTPUT_LAYER = "yolov5m_10class_250725/iou_postprocess";
 
 static std::map<uint8_t, std::string> yolo_vehicles_labels = {
     {0, "unlabeled"},
