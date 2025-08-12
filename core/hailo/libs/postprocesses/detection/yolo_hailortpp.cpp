@@ -18,7 +18,7 @@ static std::map<uint8_t, std::string> yolo_3class_labels = {
     {0, "unlabeled"},
     {1, "Person"},
     {2, "Door"},
-    {3, "Window"});
+    {3, "Window"}};
 
 static std::map<uint8_t, std::string> yolo_10class_labels = {
     {0, "unlabeled"},
